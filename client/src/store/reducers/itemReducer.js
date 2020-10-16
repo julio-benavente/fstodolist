@@ -1,17 +1,18 @@
-import { GET_ITEMS, ADD_ITEM, DELETE_ITEM } from "../actions/types";
+import * as type from "../actions/types";
+import { v4 as uuid } from "uuid";
 
 const initialState = {
   items: [
     {
-      id: 14123,
-      todo: "Este esta hecho",
-      checked: true,
+      id: uuid(),
+      todo: "Todo to complete",
+      checked: false,
       date: new Date(),
     },
     {
-      id: 1234,
-      todo: "Prueba de checked",
-      checked: false,
+      id: uuid(),
+      todo: "Todo completed",
+      checked: true,
       date: new Date(),
     },
   ],
@@ -19,14 +20,46 @@ const initialState = {
 
 export default function (state = initialState, action) {
   switch (action.type) {
-    case GET_ITEMS:
+    case type.GET_ITEMS:
       return {
         ...state,
       };
-    case DELETE_ITEM:
+    case type.ADD_ITEM:
       return {
         ...state,
-        items: state.items.filter((item) => item.id !== action.payload),
+        items: [
+          ...state.items,
+          {
+            id: uuid(),
+            todo: action.payload.todo,
+            checked: false,
+            date: new Date(),
+          },
+        ],
+      };
+    case type.DELETE_ITEM:
+      return {
+        ...state,
+        items: state.items.filter((item) => item.id !== action.payload.id),
+      };
+    case type.CHECK_ITEM:
+      return {
+        ...state,
+        items: state.items.map((item) =>
+          item.id == action.payload.id
+            ? { ...item, checked: !item.checked }
+            : item
+        ),
+      };
+    case type.UPDATE_ITEM:
+      console.log("id:", action.payload.id, "\ntodo:", action.payload.todo);
+      return {
+        ...state,
+        items: state.items.map((item) =>
+          item.id == action.payload.id
+            ? { ...item, todo: action.payload.todo }
+            : item
+        ),
       };
     default:
       return state;

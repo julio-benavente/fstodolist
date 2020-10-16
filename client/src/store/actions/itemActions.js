@@ -1,14 +1,35 @@
-import { GET_ITEMS, ADD_ITEM, DELETE_ITEM } from "./types";
+import * as type from "./types";
 
 export const getItems = () => {
   return {
-    type: GET_ITEMS,
+    type: type.GET_ITEMS,
+  };
+};
+
+export const addItem = (todo) => {
+  return {
+    type: type.ADD_ITEM,
+    payload: { todo },
   };
 };
 
 export const deleteItem = (id) => {
   return {
-    type: DELETE_ITEM,
-    payload: id,
+    type: type.DELETE_ITEM,
+    payload: { id },
+  };
+};
+
+export const checkItem = (id) => {
+  return {
+    type: type.CHECK_ITEM,
+    payload: { id },
+  };
+};
+
+export const updateItem = (id, todo) => {
+  return {
+    type: type.UPDATE_ITEM,
+    payload: { id, todo },
   };
 };

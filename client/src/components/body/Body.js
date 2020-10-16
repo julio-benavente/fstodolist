@@ -1,10 +1,19 @@
 import React, { useState, useEffect, Fragment, useRef } from "react";
 import "./Body.scss";
 import { connect } from "react-redux";
-import { deleteItem } from "../../store/actions/itemActions";
+import {
+  deleteItem,
+  checkItem,
+  updateItem,
+} from "../../store/actions/itemActions";
 
 const Body = (props) => {
-  const { items, setItems, deleteItem } = props;
+  const {
+    item: { items },
+    deleteItem,
+    updateItem,
+    checkItem,
+  } = props;
 
   const [itemsToComplete, setItemsToComplete] = useState([]);
   const [itemsCompleted, setItemsCompleted] = useState([]);
@@ -23,9 +32,9 @@ const Body = (props) => {
           ? itemsToComplete.map((item) => (
               <ItemToComplete
                 item={item}
-                items={items}
-                setItems={setItems}
                 deleteItem={deleteItem}
+                updateItem={updateItem}
+                checkItem={checkItem}
               />
             ))
           : null}
@@ -36,9 +45,8 @@ const Body = (props) => {
           ? itemsCompleted.map((item) => (
               <ItemCompleted
                 item={item}
-                items={items}
-                setItems={setItems}
                 deleteItem={deleteItem}
+                checkItem={checkItem}
               />
             ))
           : null}
@@ -51,14 +59,15 @@ const mapStateToProps = (state) => ({
   item: state.item,
 });
 
-export default connect(mapStateToProps, { deleteItem })(Body);
+export default connect(mapStateToProps, { deleteItem, updateItem, checkItem })(
+  Body
+);
 
 const ItemToComplete = (props) => {
-  const { item, items, setItems, deleteItem } = props;
+  const { item, deleteItem, updateItem, checkItem } = props;
   const { todo, id } = item;
 
   const [edit, setEdit] = useState(false);
-  const [editInput, setEditInput] = useState("");
   const inputRef = useRef(null);
 
   const handleEdit = (e) => {
@@ -78,26 +87,13 @@ const ItemToComplete = (props) => {
   };
 
   const saveEdit = () => {
-    setItems(
-      items.map((item) =>
-        item.id == id ? { ...item, todo: inputRef.current.value } : item
-      )
-    );
-
+    updateItem(id, inputRef.current.value);
     setEdit(!edit);
   };
 
-  const handleDetele = () => {
-    deleteItem(id);
-  };
+  const handleDetele = () => deleteItem(id);
 
-  const handleCheck = () => {
-    setItems(
-      items.map((item) =>
-        item.id == id ? { ...item, checked: !item.checked } : item
-      )
-    );
-  };
+  const handleCheck = () => checkItem(id);
 
   return (
     <li className="todoItem">
@@ -138,20 +134,12 @@ const ItemToComplete = (props) => {
 };
 
 const ItemCompleted = (props) => {
-  const { item, items, setItems, deleteItem } = props;
+  const { item, deleteItem, checkItem } = props;
   const { todo, id } = item;
 
-  const handleDetele = () => {
-    deleteItem(id);
-  };
+  const handleDetele = () => deleteItem(id);
 
-  const handleCheck = () => {
-    setItems(
-      items.map((item) =>
-        item.id == id ? { ...item, checked: !item.checked } : item
-      )
-    );
-  };
+  const handleCheck = () => checkItem(id);
 
   return (
     <li className="todoItem">

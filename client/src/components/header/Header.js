@@ -1,27 +1,19 @@
 import React, { useState, useRef } from "react";
 import { v4 as uuid } from "uuid";
 import "./Header.scss";
+import { connect } from "react-redux";
+import { addItem } from "../../store/actions/itemActions";
 
 const Header = (props) => {
-  const { items, setItems } = props;
+  const { addItem } = props;
 
   const [newItem, setNewItem] = useState("");
   const refAddInput = useRef(null);
 
-  const handleInput = (e) => {
-    setNewItem(e);
-  };
-
-  const addItem = (todo) => {
-    const newTodo = {
-      id: uuid(),
-      checked: false,
-      todo,
-      date: new Date(),
-    };
-
+  const handleAdd = () => {
+    let input = refAddInput.current.value;
+    addItem(input);
     refAddInput.current.value = null;
-    setItems([...items, newTodo]);
   };
 
   return (
@@ -31,13 +23,12 @@ const Header = (props) => {
         type="text"
         placeholder="Enter an activity..."
         className="inputNewItem"
-        onChange={(e) => handleInput(e.target.value)}
       />
-      <button className="addBtn" onClick={() => addItem(newItem)}>
+      <button className="addBtn" onClick={handleAdd}>
         <i className="fas fa-plus"></i>
       </button>
     </div>
   );
 };
 
-export default Header;
+export default connect(null, { addItem })(Header);
