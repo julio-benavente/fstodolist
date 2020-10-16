@@ -1,0 +1,95 @@
+.body {
+	width: 100%;
+  padding: 3% 5%;
+  
+  .itemsList {
+    .todoItem {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      width: 100%;
+      position: relative;
+      margin: 0 0 10px 0;
+      padding: 14px;
+      color: #444;
+      min-height: 50px;
+      font-size: 14px;
+      font-weight: 500;
+      background: #fff;
+      border-radius: 5px;
+      word-break: break-word;
+      list-style-type: none;
+      box-shadow: 0 0 10px rgba(44, 62,80 , 0.1);
+
+      .buttons {
+        .btn:not(:last-of-type) {
+          margin-right: 10px;
+        }
+      }
+    }
+    
+    .btn {
+      padding: 0;
+      height: 30px;
+      width: 30px;
+      width: calc();
+      border: none;
+      background: none;
+      font-size: 20px;
+      cursor: pointer;
+      outline: none;
+
+      i {
+        color: #dcdde1;
+        transition: 0.2s ease;
+      }
+
+      &:hover {
+        text-shadow: 0 0 3px #dcdde1;
+      }
+
+      &.check {
+        margin-right: 10px;
+      }
+
+      &.remove:hover i{
+        color: #c23616;
+      }
+
+      &.check:hover i{
+        color: #25b99a;
+      }
+
+      &.cancel i {
+        color: #c23616;
+      }
+
+      &.checkCircle i {
+        color: #e1b12c;
+      }
+    }
+
+    &.toComplete{
+      .inputEdit {
+        text-indent: 10px;
+      }
+    }
+
+    &.completed {
+      & .btn.check i {
+        color: #25b99a;
+      }
+
+
+    }
+  }
+}
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,17 @@
+
+* {
+	box-sizing: border-box;
+  outline: none;
+  padding: 0;
+	margin: 0;
+
+}
+
+body {
+	background: #edf0f1;
+}
+
+.App {
+  display: grid;
+  grid-auto-rows: auto;
+}
