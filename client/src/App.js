@@ -15,6 +15,7 @@ function App(props) {
 
   useEffect(() => {
     getItems();
+    // eslint-disable-next-line
   }, []);
 
   useEffect(() => {
