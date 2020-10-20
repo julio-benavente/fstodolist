@@ -14,6 +14,11 @@ const ItemSchema = new Schema({
     type: Date,
     default: Date.now,
   },
+  createdAt: {
+    type: Date,
+    expires: "10m",
+    default: Date.now,
+  },
 });
 
 module.exports = Item = mongoose.model("item", ItemSchema);

@@ -20,8 +20,8 @@ const Body = (props) => {
 
   useEffect(() => {
     if (items) {
-      setItemsToComplete(() => items.filter((e) => e.checked == false));
-      setItemsCompleted(() => items.filter((e) => e.checked == true));
+      setItemsToComplete(() => items.filter((e) => e.checked === false));
+      setItemsCompleted(() => items.filter((e) => e.checked === true));
     }
   }, [items]);
 
@@ -65,7 +65,7 @@ export default connect(mapStateToProps, { deleteItem, updateItem, checkItem })(
 
 const ItemToComplete = (props) => {
   const { item, deleteItem, updateItem, checkItem } = props;
-  const { todo, id } = item;
+  const { _id } = item;
 
   const [edit, setEdit] = useState(false);
   const inputRef = useRef(null);
@@ -87,13 +87,13 @@ const ItemToComplete = (props) => {
   };
 
   const saveEdit = () => {
-    updateItem(id, inputRef.current.value);
+    updateItem(_id, inputRef.current.value);
     setEdit(!edit);
   };
 
-  const handleDetele = () => deleteItem(id);
+  const handleDetele = () => deleteItem(_id);
 
-  const handleCheck = () => checkItem(id);
+  const handleCheck = () => checkItem(_id);
 
   return (
     <li className="todoItem">
@@ -135,11 +135,11 @@ const ItemToComplete = (props) => {
 
 const ItemCompleted = (props) => {
   const { item, deleteItem, checkItem } = props;
-  const { todo, id } = item;
+  const { todo, _id } = item;
 
-  const handleDetele = () => deleteItem(id);
+  const handleDetele = () => deleteItem(_id);
 
-  const handleCheck = () => checkItem(id);
+  const handleCheck = () => checkItem(_id);
 
   return (
     <li className="todoItem">

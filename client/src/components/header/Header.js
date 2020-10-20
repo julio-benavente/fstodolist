@@ -1,5 +1,4 @@
-import React, { useState, useRef } from "react";
-import { v4 as uuid } from "uuid";
+import React, { useRef } from "react";
 import "./Header.scss";
 import { connect } from "react-redux";
 import { addItem } from "../../store/actions/itemActions";
@@ -7,7 +6,6 @@ import { addItem } from "../../store/actions/itemActions";
 const Header = (props) => {
   const { addItem } = props;
 
-  const [newItem, setNewItem] = useState("");
   const refAddInput = useRef(null);
 
   const handleAdd = () => {
