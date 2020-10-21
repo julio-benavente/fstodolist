@@ -15,6 +15,8 @@ const Body = (props) => {
     checkItem,
   } = props;
 
+  const [filter, setFilter] = useState("all");
+
   const [itemsToComplete, setItemsToComplete] = useState([]);
   const [itemsCompleted, setItemsCompleted] = useState([]);
 
@@ -25,32 +27,62 @@ const Body = (props) => {
     }
   }, [items]);
 
+  console.log(filter);
+
   return (
     <div className="body">
-      <ul className="toComplete itemsList">
-        {itemsToComplete.length
-          ? itemsToComplete.map((item) => (
-              <ItemToComplete
-                item={item}
-                deleteItem={deleteItem}
-                updateItem={updateItem}
-                checkItem={checkItem}
-              />
-            ))
-          : null}
-      </ul>
+      <div className="filters">
+        <button
+          className={`filter ${filter === "all" && "active"}`}
+          filter="all"
+          onClick={(e) => setFilter(e.target.getAttribute("filter"))}
+        >
+          All
+        </button>
+        <button
+          className={`filter ${filter === "toComplete" && "active"}`}
+          filter="toComplete"
+          onClick={(e) => setFilter(e.target.getAttribute("filter"))}
+        >
+          To complete
+        </button>
+        <button
+          className={`filter ${filter === "completed" && "active"}`}
+          filter="completed"
+          onClick={(e) => setFilter(e.target.getAttribute("filter"))}
+        >
+          Completed
+        </button>
+      </div>
 
-      <ul className="completed itemsList">
-        {itemsCompleted.length
-          ? itemsCompleted.map((item) => (
-              <ItemCompleted
-                item={item}
-                deleteItem={deleteItem}
-                checkItem={checkItem}
-              />
-            ))
-          : null}
-      </ul>
+      {(filter === "all" || filter === "toComplete") && (
+        <ul className="toComplete itemsList">
+          {itemsToComplete.length
+            ? itemsToComplete.map((item) => (
+                <ItemToComplete
+                  item={item}
+                  deleteItem={deleteItem}
+                  updateItem={updateItem}
+                  checkItem={checkItem}
+                />
+              ))
+            : null}
+        </ul>
+      )}
+
+      {(filter === "all" || filter === "completed") && (
+        <ul className="completed itemsList">
+          {itemsCompleted.length
+            ? itemsCompleted.map((item) => (
+                <ItemCompleted
+                  item={item}
+                  deleteItem={deleteItem}
+                  checkItem={checkItem}
+                />
+              ))
+            : null}
+        </ul>
+      )}
     </div>
   );
 };
